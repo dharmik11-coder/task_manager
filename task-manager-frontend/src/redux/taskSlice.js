@@ -1,28 +1,30 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../api/axios';
 
+// Determine the API base URL based on the environment
+const API_URL = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
+
 // Async thunk to fetch tasks from the API
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
-    const response = await api.get('/tasks/');
+    const response = await api.get(`${API_URL}/api/tasks/`);
     return response.data; // Return the response data
 });
 
 // Async thunk to add a new task
 export const addTask = createAsyncThunk('tasks/addTask', async (newTask) => {
-    const response = await api.post('/tasks/', newTask);
+    const response = await api.post(`${API_URL}/api/tasks/`, newTask);
     return response.data; // Return the added task data
 });
 
 // Async thunk to update a task
 export const updateTask = createAsyncThunk('tasks/updateTask', async ({ id, name, is_completed, project }) => {
-    const response = await api.put(`/tasks/${id}/`, { name, is_completed, project });
+    const response = await api.put(`${API_URL}/api/tasks/${id}/`, { name, is_completed, project });
     return response.data; 
 });
 
-
 // Async thunk to delete a task
 export const deleteTask = createAsyncThunk('tasks/deleteTask', async (taskId) => {
-    await api.delete(`/tasks/${taskId}/`);
+    await api.delete(`${API_URL}/api/tasks/${taskId}/`);
     return taskId; // Return the deleted task ID
 });
 
