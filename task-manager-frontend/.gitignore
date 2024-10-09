@@ -11,6 +11,12 @@
 # production
 #/build
 
+# Ignore Python cache files
+__pycache__/
+
+# Ignore virtual environments
+venv/
+
 # misc
 .DS_Store
 .env.local
