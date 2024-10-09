@@ -1,4 +1,5 @@
 import os
+import dj_database_url
 
 """
 Django settings for task_manager project.
@@ -101,6 +102,9 @@ DATABASES = {
     }
 }
 
+# Use Render-hosted database if the environment variable 'USE_RENDER_DB' is set
+if os.getenv('USE_RENDER_DB'):
+    DATABASES['default'] = dj_database_url.parse('postgresql://task_manager_sqldb_user:ioArTVIfBvBgJ8f3jW2Nehen0XzBgbUO@dpg-cs3cmmqj1k6c73ac2rv0-a.virginia-postgres.render.com/task_manager_sqldb')
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
