@@ -1,33 +1,36 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../api/axios';
 
+// Determine the API base URL based on the environment
+const API_URL = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
+
 // Async thunk to fetch projects from the API
 export const fetchProjects = createAsyncThunk('projects/fetchProjects', async () => {
-    const response = await api.get('/projects/');
+    const response = await api.get(`${API_URL}/api/projects/`);
     return response.data; // Return the response data
 });
 
 // Async thunk to fetch tasks from the API
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
-    const response = await api.get('/tasks/');
+    const response = await api.get(`${API_URL}/api/tasks/`);
     return response.data; // Return the response data
 });
 
 // Async thunk to add a new project
 export const addProject = createAsyncThunk('projects/addProject', async (newProject) => {
-    const response = await api.post('/projects/', newProject);
+    const response = await api.post(`${API_URL}/api/projects/`, newProject);
     return response.data; // Return the newly created project
 });
 
 // Async thunk to delete a project
 export const deleteProject = createAsyncThunk('projects/deleteProject', async (projectId) => {
-    await api.delete(`/projects/${projectId}/`);
+    await api.delete(`${API_URL}/api/projects/${projectId}/`);
     return projectId; // Return the ID of the deleted project
 });
 
 // Async thunk to update a project
 export const updateProject = createAsyncThunk('projects/updateProject', async ({ id, name }) => {
-    const response = await api.put(`/projects/${id}/`, { name });
+    const response = await api.put(`${API_URL}/api/projects/${id}/`, { name });
     return response.data; // Return the updated project data
 });
 
